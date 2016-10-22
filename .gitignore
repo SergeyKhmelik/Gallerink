@@ -1,0 +1,11 @@
+target/classes/controller/AuthorizationController.class
+*.iml
+.idea
+target
+
+*.jar
+*.war
+*.ear
+
+.mtj.tmp/
+
