@@ -97,6 +97,16 @@ public class AuthorizationController extends BaseController {
     }
 
     @ApiOperation(
+            value = "Checks whether email is already used",
+            notes = "Returns true if user email is already used and false if email is free.",
+            httpMethod = "POST"
+    )
+    @RequestMapping(value = "/emailExist", method = RequestMethod.POST)
+    public ResponseWrapper emailExist(@RequestBody String email) {
+        return ok(userService.getUserByEmail(email) == null);
+    }
+
+    @ApiOperation(
             value = "Resets user password",
             notes = "Resets user password and sends a message on an email",
             httpMethod = "POST"
@@ -106,6 +116,5 @@ public class AuthorizationController extends BaseController {
     public void resetPassword (String email) {
 
     }
-
 
 }
