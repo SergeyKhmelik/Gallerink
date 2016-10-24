@@ -40,15 +40,8 @@ public class AuthorizationController extends BaseController {
     )
     @RequestMapping(value = "/signIn", method = RequestMethod.POST)
     public ResponseWrapper signIn(@RequestBody SignInDto signInDto, HttpServletResponse response) {
-        TokenInfo token = authenticationService.authenticate(signInDto.getEmail(), signInDto.getPassword());
-        if(token == null) {
-            throw new AuthorizationServiceException("Token is required");
-        }
-
-        response.setHeader("X-Auth-Token", token.getToken());
-        User user = userService.getUserByEmail(token.getUserDetails().getUsername());
-
-
+        addToken(signInDto.getEmail(), signInDto.getPassword(), response);
+        User user = userService.getUserByEmail(signInDto.getEmail());
         return ok(new _User(user));
     }
 
@@ -59,7 +52,7 @@ public class AuthorizationController extends BaseController {
             httpMethod = "POST"
     )
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)
-    public ResponseWrapper signUp(@RequestBody _User insertDto) {
+    public ResponseWrapper signUp(@RequestBody _User insertDto, HttpServletResponse response) {
         User user = new User();
         user.setEmail(insertDto.getEmail());
         user.setLocation(insertDto.getLocation());
@@ -68,8 +61,9 @@ public class AuthorizationController extends BaseController {
         user.setUsername(insertDto.getUsername());
         user.setName(insertDto.getName());
         user.setRole(UserRole.USER);
-
         userService.save(user);
+
+        addToken(user.getEmail(), user.getPassword(), response);
 
         return ok(new _User(user));
     }
@@ -115,6 +109,14 @@ public class AuthorizationController extends BaseController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void resetPassword (String email) {
 
+    }
+
+    private void addToken(String email, String password, HttpServletResponse response) {
+        TokenInfo token = authenticationService.authenticate(email, password);
+        if(token == null) {
+            throw new AuthorizationServiceException("Token is required");
+        }
+        response.setHeader("X-Auth-Token", token.getToken());
     }
 
 }
