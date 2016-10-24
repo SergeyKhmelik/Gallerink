@@ -6,6 +6,10 @@ import dto.IValidated;
 
 public class _User implements IDto, IValidated {
 
+    private String username;
+
+    private String name;
+
     private String email;
 
     private String password;
@@ -21,6 +25,8 @@ public class _User implements IDto, IValidated {
         setEmail(user.getEmail());
         setLocation(user.getLocation());
         setAbout(user.getAbout());
+        setName(user.getName());
+        setUsername(user.getUsername());
     }
 
     public String getEmail() {
@@ -55,4 +61,19 @@ public class _User implements IDto, IValidated {
         this.about = about;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

@@ -41,10 +41,14 @@ public class AuthorizationController extends BaseController {
     public ResponseWrapper signIn(@RequestBody SignInDto signInDto, HttpServletResponse response) {
         TokenInfo token = authenticationService.authenticate(signInDto.getEmail(), signInDto.getPassword());
         if(token == null) {
-            throw new AuthorizationServiceException("donzo");
+            throw new AuthorizationServiceException("Token is required");
         }
-        response.setHeader("x-auth-token", token.getToken());
-        return ok(token.getUserDetails());
+
+        response.setHeader("X-Auth-Token", token.getToken());
+        User user = userService.getUserByEmail(token.getUserDetails().getUsername());
+
+
+        return ok(new _User(user));
     }
 
     @ApiOperation(
@@ -60,11 +64,13 @@ public class AuthorizationController extends BaseController {
         user.setLocation(insertDto.getLocation());
         user.setAbout(insertDto.getAbout());
         user.setPassword(insertDto.getPassword());
+        user.setUsername(insertDto.getUsername());
+        user.setName(insertDto.getName());
         user.setRole(UserRole.USER);
 
         userService.save(user);
 
-        return ok(user);
+        return ok(new _User(user));
     }
 
     @ApiOperation(
@@ -84,11 +90,9 @@ public class AuthorizationController extends BaseController {
             }
     )
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public ResponseWrapper logout(@RequestHeader("Authorization") String authorizationToken) {
+    public ResponseWrapper logout(@RequestHeader("X-Auth-Token") String authorizationToken) {
         authenticationService.logout(authorizationToken);
         return noContent();
     }
-
-
 
 }

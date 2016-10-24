@@ -1,6 +1,7 @@
 package controller.user;
 
 import controller.BaseController;
+import domain.user.User;
 import dto.user._User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -8,10 +9,14 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.web.bind.annotation.*;
 import rest.ResponseWrapper;
 import security.AuthenticationService;
 import security.TokenManager;
+import service.user.UserService;
+
+import javax.naming.AuthenticationException;
 
 @Api(value = "/api/user_", description = "Provides methods for user flow")
 @RestController
@@ -20,6 +25,9 @@ public class UserController extends BaseController {
 
     @Autowired
     private AuthenticationService authenticationService;
+
+    @Autowired
+    private UserService userService;
 
     @ApiOperation(
             value = "Get user profile",
@@ -39,8 +47,14 @@ public class UserController extends BaseController {
             }
     )
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public ResponseWrapper getProfile() {
-        return ok(authenticationService.currentUser());
+    public ResponseWrapper getProfile() throws AuthenticationException {
+        if(authenticationService.currentUser() == null) {
+            throw new AuthorizationServiceException("No user found");
+        }
+
+        User user = userService.getUserByEmail(authenticationService.currentUser().getUsername());
+
+        return ok(new _User(user));
     }
 
     @ApiOperation(
