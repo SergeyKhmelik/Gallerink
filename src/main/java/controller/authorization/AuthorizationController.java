@@ -103,7 +103,7 @@ public class AuthorizationController extends BaseController {
     )
     @RequestMapping(value = "/emailExist", method = RequestMethod.POST)
     public ResponseWrapper emailExist(@RequestBody String email) {
-        return ok(userService.getUserByEmail(email) == null);
+        return ok(userService.getUserByEmail(email) != null);
     }
 
     @ApiOperation(
