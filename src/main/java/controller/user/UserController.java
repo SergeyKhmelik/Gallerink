@@ -57,27 +57,4 @@ public class UserController extends BaseController {
         return ok(new _User(user));
     }
 
-    @ApiOperation(
-            value = "Resets user password",
-            notes = "Resets user password and sends a message on an email",
-            httpMethod = "POST"
-    )
-    @ApiImplicitParams(
-            {
-                    @ApiImplicitParam(
-                            name = "X-Auth-Token",
-                            dataType = "string",
-                            required = true,
-                            paramType = "header",
-                            value = "Authorization token"
-                    )
-            }
-    )
-    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void resetPassword (String email) {
-
-    }
-
-
 }

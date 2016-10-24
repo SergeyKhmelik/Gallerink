@@ -23,7 +23,6 @@ public class User extends IndexEntity {
     @Column(nullable = false)
     private String location;
 
-    @Column(nullable = false)
     private String avatar;
 
     @Column(nullable = false)
