@@ -101,7 +101,7 @@ public class UserController extends BaseController {
                     )
             }
     )
-    @RequestMapping(value = "/profile/passwordChange", method = RequestMethod.PUT)
+    @RequestMapping(value = "/profile/passwordChange", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public ResponseWrapper changePassword(@RequestBody PasswordChangeDto passDto) throws AuthenticationException {
         User user = getUserByToken();

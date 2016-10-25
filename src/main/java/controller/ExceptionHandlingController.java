@@ -12,6 +12,7 @@ public class ExceptionHandlingController {
 
     @ExceptionHandler(Exception.class)
     public @ResponseBody ResponseWrapper handleGeneralException(Exception ex){
+        ex.printStackTrace();
         MetadataWrapper metadata = new MetadataWrapper(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), ex.getMessage());
         return new ResponseWrapper(metadata);
@@ -19,6 +20,7 @@ public class ExceptionHandlingController {
 
     @ExceptionHandler(Error.class)
     public @ResponseBody ResponseWrapper handleUnsupportableError(Error er){
+        er.printStackTrace();
         MetadataWrapper metadata = new MetadataWrapper(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), er.getMessage());
         return new ResponseWrapper(metadata);
