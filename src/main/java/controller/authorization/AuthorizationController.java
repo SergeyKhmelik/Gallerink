@@ -5,6 +5,7 @@ import controller.BaseController;
 import domain.user.User;
 import domain.user.UserRole;
 import dto.auth.SignInDto;
+import dto.user.EmailInsertDto;
 import dto.user._User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -96,8 +97,8 @@ public class AuthorizationController extends BaseController {
             httpMethod = "POST"
     )
     @RequestMapping(value = "/emailExist", method = RequestMethod.POST)
-    public ResponseWrapper emailExist(@RequestBody String email) {
-        return ok(userService.getUserByEmail(email) != null);
+    public ResponseWrapper emailExist(@RequestBody EmailInsertDto emailInsertDto) {
+        return ok(userService.getUserByEmail(emailInsertDto.getEmail()) != null);
     }
 
     @ApiOperation(
