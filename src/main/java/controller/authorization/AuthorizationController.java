@@ -16,6 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AuthorizationServiceException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import rest.ResponseWrapper;
 import security.AuthenticationService;
@@ -110,15 +111,12 @@ public class AuthorizationController extends BaseController {
     )
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void resetPassword (String email) {
+    public void resetPassword(String email) {
 
     }
 
     private void addToken(String email, String password, HttpServletResponse response) throws BaseException {
         TokenInfo token = authenticationService.authenticate(email, password);
-        if(token == null) {
-            throw new BaseException(RequestError.WRONG_CREDENTIALS);
-        }
         response.setHeader("X-Auth-Token", token.getToken());
     }
 
