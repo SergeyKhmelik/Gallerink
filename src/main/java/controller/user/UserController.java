@@ -1,6 +1,8 @@
 package controller.user;
 
 import controller.BaseController;
+import controller.BaseException;
+import controller.RequestError;
 import domain.user.User;
 import dto.user.PasswordChangeDto;
 import dto.user._SimpleUser;
@@ -19,6 +21,7 @@ import security.TokenManager;
 import service.user.UserService;
 
 import javax.naming.AuthenticationException;
+import java.util.Objects;
 
 @Api(value = "/api/user_", description = "Provides methods for user flow")
 @RestController
@@ -49,7 +52,7 @@ public class UserController extends BaseController {
             }
     )
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public ResponseWrapper getProfile() throws AuthenticationException {
+    public ResponseWrapper getProfile() throws BaseException {
         User user = getUserByToken();
 
         return ok(new _User(user));
@@ -73,12 +76,18 @@ public class UserController extends BaseController {
             }
     )
     @RequestMapping(value = "/profile", method = RequestMethod.PUT)
-    public ResponseWrapper updateProfile(@RequestBody _SimpleUser updateDto) throws AuthenticationException {
+    public ResponseWrapper updateProfile(@RequestBody _SimpleUser updateDto) throws BaseException {
         User user = getUserByToken();
+
+
+        if (!Objects.equals(user.getUsername(), updateDto.getUsername()) &&
+                userService.usernameExists(updateDto.getUsername())) {
+            throw new BaseException(RequestError.USERNAME_ALREADY_USED);
+        }
+        user.setUsername(updateDto.getUsername());
 
         user.setName(updateDto.getName());
         user.setLocation(updateDto.getLocation());
-        user.setUsername(updateDto.getUsername());
         user.setAbout(updateDto.getAbout());
         userService.save(user);
 
@@ -103,11 +112,11 @@ public class UserController extends BaseController {
     )
     @RequestMapping(value = "/profile/passwordChange", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public ResponseWrapper changePassword(@RequestBody PasswordChangeDto passDto) throws AuthenticationException {
+    public ResponseWrapper changePassword(@RequestBody PasswordChangeDto passDto) throws BaseException {
         User user = getUserByToken();
 
-        if(!user.getPassword().equals(passDto.getOldPassword())) {
-            throw new AuthenticationException("Wrong old password");
+        if (!user.getPassword().equals(passDto.getOldPassword())) {
+            throw new BaseException(RequestError.WRONG_OLD_PASSWORD);
         }
 
         user.setPassword(passDto.getNewPassword());
@@ -116,9 +125,9 @@ public class UserController extends BaseController {
         return noContent();
     }
 
-    private User getUserByToken() {
-        if(authenticationService.currentUser() == null) {
-            throw new AuthorizationServiceException("No user found");
+    private User getUserByToken() throws BaseException {
+        if (authenticationService.currentUser() == null) {
+            throw new BaseException(RequestError.AUTHORIZATION_REQUIRED);
         }
 
         return userService.getUserByEmail(authenticationService.currentUser().getUsername());

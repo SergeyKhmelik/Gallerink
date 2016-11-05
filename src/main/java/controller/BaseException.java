@@ -2,7 +2,7 @@ package controller;
 
 import org.springframework.http.HttpStatus;
 
-public class BaseException extends Throwable {
+public class BaseException extends Exception {
 
     private HttpStatus status;
 

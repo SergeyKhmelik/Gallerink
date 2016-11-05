@@ -2,6 +2,8 @@ package controller.authorization;
 
 
 import controller.BaseController;
+import controller.BaseException;
+import controller.RequestError;
 import domain.user.User;
 import domain.user.UserRole;
 import dto.auth.SignInDto;
@@ -40,7 +42,7 @@ public class AuthorizationController extends BaseController {
             httpMethod = "POST"
     )
     @RequestMapping(value = "/signIn", method = RequestMethod.POST)
-    public ResponseWrapper signIn(@RequestBody SignInDto signInDto, HttpServletResponse response) {
+    public ResponseWrapper signIn(@RequestBody SignInDto signInDto, HttpServletResponse response) throws BaseException {
         addToken(signInDto.getEmail(), signInDto.getPassword(), response);
         User user = userService.getUserByEmail(signInDto.getEmail());
         return ok(new _User(user));
@@ -53,7 +55,7 @@ public class AuthorizationController extends BaseController {
             httpMethod = "POST"
     )
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)
-    public ResponseWrapper signUp(@RequestBody _User insertDto, HttpServletResponse response) {
+    public ResponseWrapper signUp(@RequestBody _User insertDto, HttpServletResponse response) throws BaseException {
         User user = new User();
         user.setEmail(insertDto.getEmail());
         user.setLocation(insertDto.getLocation());
@@ -112,10 +114,10 @@ public class AuthorizationController extends BaseController {
 
     }
 
-    private void addToken(String email, String password, HttpServletResponse response) {
+    private void addToken(String email, String password, HttpServletResponse response) throws BaseException {
         TokenInfo token = authenticationService.authenticate(email, password);
         if(token == null) {
-            throw new AuthorizationServiceException("Token is required");
+            throw new BaseException(RequestError.WRONG_CREDENTIALS);
         }
         response.setHeader("X-Auth-Token", token.getToken());
     }
