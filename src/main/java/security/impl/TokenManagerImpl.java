@@ -26,6 +26,11 @@ public class TokenManagerImpl implements TokenManager {
 
     @Override
     public TokenInfo createNewToken(UserDetails userDetails) {
+        // if user already logged in on one device, it should get same token while logging in on another one
+        if (tokens.containsKey(userDetails)) {
+            return tokens.get(userDetails);
+        }
+
         String token;
         do {
             token = generateToken();

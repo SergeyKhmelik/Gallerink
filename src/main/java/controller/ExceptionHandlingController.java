@@ -10,6 +10,12 @@ import rest.ResponseWrapper;
 @ControllerAdvice
 public class ExceptionHandlingController {
 
+    @ExceptionHandler(BaseException.class)
+    public @ResponseBody ResponseWrapper handleCustomException(BaseException ex) {
+        MetadataWrapper metadata = new MetadataWrapper(ex.getStatus().value(), ex.getErrorCode(), ex.getStatus().getReasonPhrase(), ex.getMessage());
+        return new ResponseWrapper(metadata);
+    }
+
     @ExceptionHandler(Exception.class)
     public @ResponseBody ResponseWrapper handleGeneralException(Exception ex){
         ex.printStackTrace();
