@@ -32,8 +32,9 @@ import java.nio.file.Paths;
 @RequestMapping(value = "/api/file")
 public class FileController extends BaseController {
 
-    public static final String IMAGE_EXTENSIONS = "jpg|png|tiff|gif|jpeg";
+    private static final String IMAGE_EXTENSIONS = "jpg|png|tiff|gif|jpeg";
     private static final String IMAGE_FOLDER_NAME = "images";
+
     @Autowired
     private FileService fileService;
 
