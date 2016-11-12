@@ -62,7 +62,6 @@ public class AuthorizationController extends BaseController {
         user.setLocation(insertDto.getLocation());
         user.setAbout(insertDto.getAbout());
         user.setPassword(insertDto.getPassword());
-        user.setUsername(insertDto.getUsername());
         user.setName(insertDto.getName());
         user.setRole(UserRole.USER);
         userService.save(user);
@@ -110,7 +109,7 @@ public class AuthorizationController extends BaseController {
             httpMethod = "POST"
     )
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public String resetPassword() {
+    public String resetPassword(@RequestBody EmailInsertDto emailInsertDto) {
         return System.getProperty("user.dir");
     }
 

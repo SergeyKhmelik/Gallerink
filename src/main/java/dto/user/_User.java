@@ -18,7 +18,6 @@ public class _User extends _SimpleUser {
         setLocation(user.getLocation());
         setAbout(user.getAbout());
         setName(user.getName());
-        setUsername(user.getUsername());
     }
 
     public String getEmail() {

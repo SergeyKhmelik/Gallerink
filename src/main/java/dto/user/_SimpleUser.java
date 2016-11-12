@@ -6,8 +6,6 @@ import dto.IValidated;
 
 public class _SimpleUser implements IDto, IValidated {
 
-    private String username;
-
     private String name;
 
     private String location;
@@ -18,20 +16,11 @@ public class _SimpleUser implements IDto, IValidated {
     }
 
     public _SimpleUser(User user) {
-        setUsername(user.getUsername());
         setName(user.getName());
         setLocation(user.getLocation());
         setAbout(user.getAbout());
     }
 
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getName() {
         return name;

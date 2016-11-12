@@ -17,9 +17,6 @@ public class User extends IndexEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(unique = true, nullable = false)
-    private String username;
-
     @Column(nullable = false)
     private String location;
 
@@ -91,11 +88,4 @@ public class User extends IndexEntity {
         this.name = name;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 }

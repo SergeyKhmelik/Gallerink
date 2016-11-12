@@ -78,14 +78,6 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/profile", method = RequestMethod.PUT)
     public ResponseWrapper updateProfile(@RequestBody _SimpleUser updateDto) throws BaseException {
         User user = getUserByToken();
-
-
-        if (!Objects.equals(user.getUsername(), updateDto.getUsername()) &&
-                userService.usernameExists(updateDto.getUsername())) {
-            throw new BaseException(RequestError.USERNAME_ALREADY_USED);
-        }
-        user.setUsername(updateDto.getUsername());
-
         user.setName(updateDto.getName());
         user.setLocation(updateDto.getLocation());
         user.setAbout(updateDto.getAbout());

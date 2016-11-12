@@ -7,7 +7,6 @@ public enum  RequestError {
     AUTHORIZATION_REQUIRED(HttpStatus.UNAUTHORIZED, 401000, "Authorization required"),
     WRONG_CREDENTIALS(HttpStatus.BAD_REQUEST, 400000, "Wrong credentials"),
     WRONG_OLD_PASSWORD(HttpStatus.UNAUTHORIZED, 401002, "Wrong old password provided"),
-    USERNAME_ALREADY_USED(HttpStatus.BAD_REQUEST, 400001, "User with this username already exists"),
     FILE_REQUIRED(HttpStatus.BAD_REQUEST, 400003, "File required"),
     FILE_FORMAT_EXCEPTION(HttpStatus.BAD_REQUEST, 400002, "File format should be .jpg, .png, .tiff, .gif"),
     IMAGE_UPLOAD_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 500001, "File upload exception"),

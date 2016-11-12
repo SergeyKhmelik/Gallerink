@@ -11,7 +11,7 @@ public class FileEntity extends IndexEntity {
     @Column(name = "filename", nullable = false)
     private String filename;
 
-    @Column(name = "extemsion", nullable = false)
+    @Column(name = "extension", nullable = false)
     private String extension;
 
     public FileEntity() {
