@@ -60,6 +60,9 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
     <tx:annotation-driven/>
 
     <jpa:repositories base-package="repository"/>
