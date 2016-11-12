@@ -110,9 +110,8 @@ public class AuthorizationController extends BaseController {
             httpMethod = "POST"
     )
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void resetPassword(String email) {
-
+    public String resetPassword() {
+        return System.getProperty("user.dir");
     }
 
     private void addToken(String email, String password, HttpServletResponse response) throws BaseException {
