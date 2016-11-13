@@ -63,6 +63,7 @@ public class AuthorizationController extends BaseController {
         user.setAbout(insertDto.getAbout());
         user.setPassword(insertDto.getPassword());
         user.setName(insertDto.getName());
+        user.setAvatar(insertDto.getAvatar());
         user.setRole(UserRole.USER);
         userService.save(user);
 

@@ -43,6 +43,7 @@
         <intercept-url pattern="/swagger-resources" access="permitAll"/>
         <intercept-url pattern="/configuration/" access="permitAll"/>
         <intercept-url pattern="/api/authorization/*" access="permitAll"/>
+        <intercept-url pattern="/api/file/*" access="permitAll"/>
         <intercept-url pattern="/api/**" access="isFullyAuthenticated()"/>
     </http>
 

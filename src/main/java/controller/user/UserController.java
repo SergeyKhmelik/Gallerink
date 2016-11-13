@@ -81,6 +81,7 @@ public class UserController extends BaseController {
         user.setName(updateDto.getName());
         user.setLocation(updateDto.getLocation());
         user.setAbout(updateDto.getAbout());
+        user.setAvatar(updateDto.getAvatar());
         userService.save(user);
 
         return ok(new _SimpleUser(user));

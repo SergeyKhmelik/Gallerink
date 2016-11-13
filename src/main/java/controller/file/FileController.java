@@ -42,7 +42,8 @@ public class FileController extends BaseController {
             value = "Upload image file",
             notes = "Upload image file",
             httpMethod = "POST",
-            consumes = "multipart/form-data"
+            consumes = "multipart/form-data",
+            response = dto.file._FileEntity.class
     )
     @ApiImplicitParams(
             {
@@ -51,13 +52,6 @@ public class FileController extends BaseController {
                             dataType = "file",
                             value = "File to upload",
                             paramType = "form"
-                    ),
-                    @ApiImplicitParam(
-                            name = "Authorization",
-                            dataType = "string",
-                            required = false,
-                            paramType = "header",
-                            value = "Authorization header"
                     )
             }
     )
@@ -99,13 +93,6 @@ public class FileController extends BaseController {
                             required = true,
                             paramType = "path",
                             value = "Image uuid"
-                    ),
-                    @ApiImplicitParam(
-                            name = "Authorization",
-                            dataType = "string",
-                            required = false,
-                            paramType = "header",
-                            value = "Authorization header"
                     )
             }
     )

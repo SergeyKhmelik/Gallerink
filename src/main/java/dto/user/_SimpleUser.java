@@ -12,6 +12,8 @@ public class _SimpleUser implements IDto, IValidated {
 
     private String about;
 
+    private String avatar;
+
     public _SimpleUser() {
     }
 
@@ -19,6 +21,7 @@ public class _SimpleUser implements IDto, IValidated {
         setName(user.getName());
         setLocation(user.getLocation());
         setAbout(user.getAbout());
+        setAvatar(user.getAvatar());
     }
 
 
@@ -44,5 +47,13 @@ public class _SimpleUser implements IDto, IValidated {
 
     public void setAbout(String about) {
         this.about = about;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }
